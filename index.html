@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>base64图片在线转换工具 - 刘学馆</title>
+    <meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="keywords" content="图片Base64编码,Base64 DataUrl编码,base64图片转换工具,base64图片在线转换" />
+	<meta name="description" content="base64图片转换工具，是一款可以在线任意图片格式转Base64 DataUrl编码工具,可以让你很方便地在没有上传文件的条件下将图片插入其它的网页、编辑器中。JS前端上传图片、压缩、并且处理旋转问题，生成base64数据。" />
+	<link rel="stylesheet" href="css/pure-min.css"/>
+	<link rel="stylesheet" href="css/grids-responsive-min.css"/>
+	<link rel="stylesheet" href="css/styles.css"/>
+	<link rel="shortcut icon" href="favicon.ico">
+    <script src="js/base64image.js" type="text/javascript"></script>
+    <script src="js/exif.js" type="text/javascript"></script>
+</head>
+<body>
+	<div class="pure-menu pure-menu-horizontal">
+	    <a href="http://www.sexy0769.com/" class="pure-menu-heading">
+			sexy0769</a>
+	    <ul class="pure-menu-list">
+	        <li class="pure-menu-item"><a href="http://www.sexy0769.com/" class="pure-menu-link">刘学馆</a></li>
+	        <li class="pure-menu-item pure-menu-selected"><a href="#" class="pure-menu-link">base64图片在线转换</a></li>
+	    </ul>
+	</div>
+	
+	<div class="banner">
+			<h1 class="banner-head">
+			        base64图片<br>
+			        在线转换工具
+			    </h1>
+	</div>
+	
+	<div class="pure-g">
+		<div class="pure-u-1 div-aside">
+			<h3>工具简介：</h3>
+			<p>base64图片转换工具，是一款可以在线任意图片格式转Base64 DataUrl编码工具,可以让你很方便地在没有上传文件的条件下将图片插入其它的网页、编辑器中。</p>
+		</div>
+	</div>
+	
+	<div class="pure-g">
+	    <div class="pure-u-1 pure-u-md-1-2 div-center">
+			<div class="div-center box-style" id="img_area">
+				<input type="file" style="display: none" onchange="fileUp(this)" id="file-up">
+				<input type="button" class="pure-button pure-button-primary" value="点我上传图片" onclick="document.getElementById('file-up').click();"/>
+			</div>
+		</div>
+	    <div class="pure-u-1 pure-u-md-1-2 div-center">
+				<textarea class="div-center box-style" placeholder="base64编码" id="base64code"></textarea>
+		</div>
+		<div class="pure-u-1 div-right">
+			<input type="file" style="display: none" onchange="fileUp(this)" id="file-up-2">
+			<button type="button" class="pure-button pure-button-primary" onclick="document.getElementById('file-up-2').click();">图片转成Base64</button>
+			&nbsp;&nbsp;
+			<button type="button" class="pure-button pure-button-primary" onclick="base64toimg();">Base64转成图片</button>
+		</div>
+	</div>
+	
+	<div class="footer l-box">
+	    <p>
+	        本网站由 <a href="http://www.sexy0769.com/">刘学馆</a> 强力驱动
+			<br />
+			<a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备16055304号</a>
+	    </p>
+	</div>
+
+    <script>
+        var fileUp = function (me) {
+            base64Image({
+                //width: 750,                             /*【选填】宽度默认750，如果图片尺寸大于该宽度，图片将被设置为该宽度*/
+                ratio: 0.75,                            /*【选填】压缩率默认0.75 */
+                file: me,                               /*【必填】对应的上传元素 */
+                callback: function (imageUrl){         /*【必填】处理成功后的回调函数 */
+                    /*imageUrl为得到的图片base64数据，这里可以进行上传到服务器或者其他逻辑操作 */
+                    var img = new Image();
+                    img.src = imageUrl;
+					img.className = 'pure-img';
+                    //document.getElementById("img_area").appendChild(img);
+					document.getElementById("img_area").innerHTML = '<img class="pure-img"'+ ' src="'+imageUrl+'"/>';
+					document.getElementById("base64code").value = imageUrl;
+                },
+            });
+        };
+		
+		 //base64转图片
+		 var base64toimg = function(){
+			 var imgsrc = document.getElementById("base64code").value;
+			 document.getElementById("img_area").innerHTML = '<img class="pure-img"'+ ' src="'+imgsrc+'"/>';
+		 }
+    </script>
+</body>
+</html>
